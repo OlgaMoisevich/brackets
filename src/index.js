@@ -1,7 +1,6 @@
 module.exports = function check(str, bracketsConfig) {
 
-    let arr = Object.values(str.split(''));
-    if (arr.length % 2 !== 0) {
+    if (str.length % 2 !== 0) {
         return false;
     }
 
@@ -16,9 +15,9 @@ module.exports = function check(str, bracketsConfig) {
         close_sign.push(value)
     });
 
-    for (let sign = 0; sign < arr.length; sign++) {
+    for (let sign = 0; sign < str.length; sign++) {
 
-        closeIndex = close_sign.indexOf(arr[sign]);
+        closeIndex = close_sign.indexOf(str[sign]);
         if (closeIndex !== -1 && stack.length) {
             let last_el = stack[stack.length - 1];
             if (last_el === open_sign[closeIndex]) {
@@ -27,14 +26,19 @@ module.exports = function check(str, bracketsConfig) {
             }
         }
 
-        openIndex = open_sign.indexOf(arr[sign]);
+        openIndex = open_sign.indexOf(str[sign]);
         if (openIndex !== -1) {
-            stack.push(arr[sign]);
+            stack.push(str[sign]);
         } else {
             return false
         }
     };
-    return true
+
+    if (stack.length > 0) {
+        return false;
+    } else {
+        return true;
+    }
 };
 
 
